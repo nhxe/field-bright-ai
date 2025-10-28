@@ -1,5 +1,34 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart3, PieChart, TrendingUp, Map } from "lucide-react";
+import { BarChart3, PieChart as PieChartIcon, TrendingUp, Map } from "lucide-react";
+import { LineChart, Line, BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+
+// Sample data
+const priceData = [
+  { month: "Jan", actual: 45, predicted: 45 },
+  { month: "Feb", actual: 48, predicted: 47 },
+  { month: "Mar", actual: 52, predicted: 51 },
+  { month: "Apr", actual: 49, predicted: 50 },
+  { month: "May", actual: 55, predicted: 54 },
+  { month: "Jun", actual: 58, predicted: 59 },
+  { month: "Jul", actual: null, predicted: 62 },
+  { month: "Aug", actual: null, predicted: 65 },
+];
+
+const cropDistribution = [
+  { name: "Wheat", value: 45, color: "hsl(var(--primary))" },
+  { name: "Rice", value: 30, color: "hsl(var(--secondary))" },
+  { name: "Corn", value: 15, color: "hsl(var(--accent))" },
+  { name: "Others", value: 10, color: "hsl(var(--muted-foreground))" },
+];
+
+const supplyForecast = [
+  { quarter: "Q1", supply: 6500, demand: 6000 },
+  { quarter: "Q2", supply: 8000, demand: 7500 },
+  { quarter: "Q3", supply: 5500, demand: 6500 },
+  { quarter: "Q4", supply: 9000, demand: 8500 },
+  { quarter: "Q1'25", supply: 7000, demand: 7200 },
+  { quarter: "Q2'25", supply: 8500, demand: 8000 },
+];
 
 export const DashboardPreview = () => {
   return (
@@ -54,46 +83,41 @@ export const DashboardPreview = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="aspect-video bg-card rounded-lg p-4 relative">
-                {/* Simulated line chart */}
-                <svg className="w-full h-full" viewBox="0 0 400 200">
-                  <defs>
-                    <linearGradient id="priceGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="hsl(var(--accent))" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0" />
-                    </linearGradient>
-                  </defs>
-                  {/* Grid lines */}
-                  {[0, 50, 100, 150, 200].map((y) => (
-                    <line key={y} x1="0" y1={y} x2="400" y2={y} stroke="hsl(var(--border))" strokeWidth="1" />
-                  ))}
-                  {/* Actual price line */}
-                  <polyline
-                    points="0,150 50,140 100,145 150,130 200,135 250,120 300,125 350,115 400,110"
-                    fill="none"
-                    stroke="hsl(var(--secondary))"
-                    strokeWidth="3"
+              <ResponsiveContainer width="100%" height={250}>
+                <LineChart data={priceData}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="month" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" label={{ value: '₹/Quintal', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px'
+                    }}
                   />
-                  {/* Predicted price line */}
-                  <polyline
-                    points="200,135 250,125 300,130 350,120 400,115"
-                    fill="url(#priceGradient)"
-                    stroke="hsl(var(--accent))"
-                    strokeWidth="3"
-                    strokeDasharray="5,5"
+                  <Legend />
+                  <Line 
+                    type="monotone" 
+                    dataKey="actual" 
+                    stroke="hsl(var(--secondary))" 
+                    strokeWidth={3}
+                    dot={{ fill: 'hsl(var(--secondary))', r: 4 }}
+                    name="Actual Price"
                   />
-                </svg>
-              </div>
-              <div className="flex items-center gap-4 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-1 bg-secondary rounded" />
-                  <span className="text-muted-foreground">Actual Price</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-4 h-1 bg-accent rounded border-dashed border" />
-                  <span className="text-muted-foreground">Predicted Price</span>
-                </div>
-              </div>
+                  <Line 
+                    type="monotone" 
+                    dataKey="predicted" 
+                    stroke="hsl(var(--accent))" 
+                    strokeWidth={3}
+                    strokeDasharray="5 5"
+                    dot={{ fill: 'hsl(var(--accent))', r: 4 }}
+                    name="Predicted Price"
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+              <p className="text-sm text-muted-foreground text-center">
+                Predicted vs Actual market prices (₹ per quintal)
+              </p>
             </CardContent>
           </Card>
 
@@ -101,34 +125,40 @@ export const DashboardPreview = () => {
           <Card className="border-2 hover:border-accent/50 transition-all hover:shadow-xl animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-2xl">
-                <PieChart className="w-6 h-6 text-accent" />
+                <PieChartIcon className="w-6 h-6 text-accent" />
                 Crop Distribution
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="aspect-square max-w-xs mx-auto relative">
-                {/* Simulated pie chart */}
-                <svg className="w-full h-full" viewBox="0 0 200 200">
-                  <circle cx="100" cy="100" r="80" fill="hsl(var(--primary))" />
-                  <path d="M 100,100 L 100,20 A 80,80 0 0,1 160,70 Z" fill="hsl(var(--secondary))" />
-                  <path d="M 100,100 L 160,70 A 80,80 0 0,1 170,140 Z" fill="hsl(var(--accent))" />
-                  <circle cx="100" cy="100" r="50" fill="hsl(var(--background))" />
-                </svg>
-              </div>
-              <div className="grid grid-cols-3 gap-2 text-sm">
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-primary" />
-                  <span className="text-muted-foreground">Wheat</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-secondary" />
-                  <span className="text-muted-foreground">Rice</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div className="w-3 h-3 rounded-full bg-accent" />
-                  <span className="text-muted-foreground">Corn</span>
-                </div>
-              </div>
+              <ResponsiveContainer width="100%" height={300}>
+                <PieChart>
+                  <Pie
+                    data={cropDistribution}
+                    cx="50%"
+                    cy="50%"
+                    labelLine={false}
+                    label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
+                    outerRadius={100}
+                    innerRadius={60}
+                    fill="#8884d8"
+                    dataKey="value"
+                  >
+                    {cropDistribution.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.color} />
+                    ))}
+                  </Pie>
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+              <p className="text-sm text-muted-foreground text-center">
+                Regional crop distribution by area (in %)
+              </p>
             </CardContent>
           </Card>
 
@@ -141,25 +171,25 @@ export const DashboardPreview = () => {
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="aspect-video bg-card rounded-lg p-4">
-                {/* Simulated bar chart */}
-                <div className="h-full flex items-end justify-around gap-2">
-                  {[65, 80, 55, 90, 70, 85, 75, 95].map((height, i) => (
-                    <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                      <div
-                        className="w-full bg-gradient-to-t from-primary to-accent rounded-t animate-grow"
-                        style={{
-                          height: `${height}%`,
-                          animationDelay: `${i * 0.1}s`,
-                        }}
-                      />
-                      <span className="text-xs text-muted-foreground">Q{i + 1}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <p className="text-sm text-muted-foreground">
-                Quarterly supply forecast based on cultivation data
+              <ResponsiveContainer width="100%" height={250}>
+                <BarChart data={supplyForecast}>
+                  <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
+                  <XAxis dataKey="quarter" stroke="hsl(var(--muted-foreground))" />
+                  <YAxis stroke="hsl(var(--muted-foreground))" label={{ value: 'Tonnes (000s)', angle: -90, position: 'insideLeft' }} />
+                  <Tooltip 
+                    contentStyle={{ 
+                      backgroundColor: 'hsl(var(--card))', 
+                      border: '1px solid hsl(var(--border))',
+                      borderRadius: '8px'
+                    }}
+                  />
+                  <Legend />
+                  <Bar dataKey="supply" fill="hsl(var(--primary))" name="Supply" radius={[8, 8, 0, 0]} />
+                  <Bar dataKey="demand" fill="hsl(var(--accent))" name="Demand" radius={[8, 8, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+              <p className="text-sm text-muted-foreground text-center">
+                Quarterly supply vs demand forecast (in thousands of tonnes)
               </p>
             </CardContent>
           </Card>
