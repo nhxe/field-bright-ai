@@ -1,19 +1,22 @@
 import { Satellite, Brain, User } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const About = () => {
+  const { t } = useLanguage();
+
   return (
     <section className="py-24 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center space-y-6 mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            What is AgriSense AI?
+            {t('aboutTitle')}
           </h2>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            AgriSense AI is a platform that uses freely available satellite images and machine learning to detect which crops are grown, estimate cultivation areas, and forecast supply-demand balance to predict prices before harvest.
+            {t('aboutDesc1')}
           </p>
           <p className="text-lg text-muted-foreground leading-relaxed">
-            Unlike other agri-data services, AgriSense AI uses open-source technology and radar-based data — meaning it even works during cloudy monsoon seasons when most satellites can't capture clear images.
+            {t('aboutDesc2')}
           </p>
         </div>
 

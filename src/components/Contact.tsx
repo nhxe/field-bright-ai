@@ -3,8 +3,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, MapPin, Phone } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Contact = () => {
+  const { t } = useLanguage();
   return (
     <section className="py-24 bg-gradient-to-b from-background to-muted/30">
       <div className="container mx-auto px-4">
@@ -63,8 +65,8 @@ export const Contact = () => {
                 </div>
                 <div>
                   <h3 className="font-semibold text-foreground mb-1">Email Us</h3>
-                  <p className="text-muted-foreground">support@agrisense.ai</p>
-                  <p className="text-muted-foreground">info@agrisense.ai</p>
+                  <p className="text-muted-foreground">{t('supportEmail')}</p>
+                  <p className="text-muted-foreground">{t('infoEmail')}</p>
                 </div>
               </CardContent>
             </Card>

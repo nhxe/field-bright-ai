@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Globe, Cloud, TrendingUp, Users } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const Features = () => {
+  const { t } = useLanguage();
   const features = [
     {
       icon: Globe,
@@ -40,10 +42,10 @@ export const Features = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center space-y-4 mb-16 animate-fade-in">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            What Makes AgriSense AI Unique
+            {t('featuresTitle')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Revolutionary features that put farmers first
+            {t('featuresSubtitle')}
           </p>
         </div>
 

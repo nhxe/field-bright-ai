@@ -8,7 +8,7 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Earthy, warm color palette for AgriSense AI */
+    /* Earthy, warm color palette for NEEYOGI */
     --background: 40 33% 97%; /* Cream white #FAF7F2 */
     --foreground: 33 30% 25%; /* Dark brown for text */
 
