@@ -10,17 +10,17 @@ interface LanguageContextType {
 
 const translations = {
   en: {
-    appName: 'NEEYOGI',
+    appName: 'NÈYOGI',
     heroTitle: 'Empowering Farmers with AI and Satellite Intelligence',
     heroDescription: 'We help farmers make smarter choices by combining space data and artificial intelligence to estimate crop area, forecast supply, and predict market prices — all using free and open data.',
     exploreInsights: 'Explore Insights',
     learnMore: 'Learn More',
-    aboutTitle: 'What is NEEYOGI?',
-    aboutDesc1: 'NEEYOGI is a platform that uses freely available satellite images and machine learning to detect which crops are grown, estimate cultivation areas, and forecast supply-demand balance to predict prices before harvest.',
-    aboutDesc2: 'Unlike other agri-data services, NEEYOGI uses open-source technology and radar-based data — meaning it even works during cloudy monsoon seasons when most satellites can\'t capture clear images.',
-    featuresTitle: 'What Makes NEEYOGI Unique',
+    aboutTitle: 'What is NÈYOGI?',
+    aboutDesc1: 'NÈYOGI is a platform that uses freely available satellite images and machine learning to detect which crops are grown, estimate cultivation areas, and forecast supply-demand balance to predict prices before harvest.',
+    aboutDesc2: 'Unlike other agri-data services, NÈYOGI uses open-source technology and radar-based data — meaning it even works during cloudy monsoon seasons when most satellites can\'t capture clear images.',
+    featuresTitle: 'What Makes NÈYOGI Unique',
     featuresSubtitle: 'Revolutionary features that put farmers first',
-    footer: '© 2024 NEEYOGI. Empowering farmers with technology, not replacing them.',
+    footer: '© 2024 NÈYOGI. Empowering farmers with technology, not replacing them.',
     supportEmail: 'support@neeyogi.ai',
     infoEmail: 'info@neeyogi.ai',
   },
